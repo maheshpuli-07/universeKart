@@ -17,7 +17,7 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark  main-color py-2">
       <div className="container-fluid">
-        <NavLink className="navbar-brand" to='/search'>universe</NavLink>
+        <NavLink className="navbar-brand" to='/search'>universekart</NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -41,6 +41,11 @@ export const Navbar = () => {
                 SearchProducts
               </NavLink>
             </li>
+            {authState.isAuthenticated &&
+            <li className="nav-item">
+              <NavLink className='nav-link' to='/shelf'>Shelf</NavLink>
+            </li>
+            }
           </ul>
           <ul className="navbar-nav ms-auto">
 
