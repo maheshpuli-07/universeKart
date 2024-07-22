@@ -10,7 +10,7 @@ export const LoansModal: React.FC<{ shelfCurrentLoan: ShelfCurrentLoans, mobile:
                     <div className='modal-content'>
                         <div className='modal-header'>
                             <h5 className='modal-title' id='staticBackdropLabel'>
-                                Loan Options
+                                Manage Product.!
                             </h5>
                             <button type='button' className='btn-close' data-bs-dismiss='modal' aria-label='Close'>
                             </button>
@@ -53,7 +53,7 @@ export const LoansModal: React.FC<{ shelfCurrentLoan: ShelfCurrentLoans, mobile:
                                         <button onClick={() => props.returnBook(props.shelfCurrentLoan.book.id)} 
                                            data-bs-dismiss='modal' className='list-group-item list-group-item-action' 
                                            aria-current='true'>
-                                            Return Book
+                                            Return Product
                                         </button>
                                         <button onClick={
                                             props.shelfCurrentLoan.daysLeft < 0 ? 
@@ -85,4 +85,3 @@ export const LoansModal: React.FC<{ shelfCurrentLoan: ShelfCurrentLoans, mobile:
         </div>
     );
 }
-export default LoansModal;

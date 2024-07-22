@@ -5,7 +5,6 @@ import ShelfCurrentLoans from '../../../models/ShelfCurrentLoans';
 import { SpinnerLoading } from '../../Utils/SpinnerLoading';
 import { LoansModal } from './LoansModal';
 
-
 export const Loans = () => {
     
     const { authState } = useOktaAuth();
@@ -59,6 +58,38 @@ export const Loans = () => {
         );
     }
 
+    async function returnBook(bookId: number) {
+        const url = `http://localhost:8080/api/books/secure/return/?bookId=${bookId}`;
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        };
+        const returnResponse = await fetch(url, requestOptions);
+        if (!returnResponse.ok) {
+            throw new Error('Something went wrong!');
+        }
+        setCheckout(!checkout);
+    }
+
+    async function renewLoan(bookId: number) {
+        const url = `http://localhost:8080/api/books/secure/renew/loan/?bookId=${bookId}`;
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+                'Content-Type': 'application/json'
+            }
+        };
+
+        const returnResponse = await fetch(url, requestOptions);
+        if (!returnResponse.ok) {
+            throw new Error('Something went wrong!');
+        }
+        setCheckout(!checkout);
+    }
     
     return (
         <div>
@@ -66,7 +97,7 @@ export const Loans = () => {
             <div className='d-none d-lg-block mt-2'>
                 {shelfCurrentLoans.length > 0 ? 
                 <>
-                    <h5>Current Loans: </h5>
+                    <h5>Current Products: </h5>
 
                     {shelfCurrentLoans.map(shelfCurrentLoan => (
                         <div key={shelfCurrentLoan.book.id}>
@@ -82,7 +113,7 @@ export const Loans = () => {
                                 <div className='card col-3 col-md-3 container d-flex'>
                                     <div className='card-body'>
                                         <div className='mt-3'>
-                                            <h4>Loan Options</h4>
+                                            <h4>Product Options</h4>
                                             {shelfCurrentLoan.daysLeft > 0 && 
                                                 <p className='text-secondary'>
                                                     Due in {shelfCurrentLoan.daysLeft} days.
@@ -102,16 +133,16 @@ export const Loans = () => {
                                                 <button className='list-group-item list-group-item-action' 
                                                     aria-current='true' data-bs-toggle='modal' 
                                                     data-bs-target={`#modal${shelfCurrentLoan.book.id}`}>
-                                                        Manage Loan
+                                                        Manage Product
                                                 </button>
                                                 <Link to={'search'} className='list-group-item list-group-item-action'>
-                                                    Search more books?
+                                                    Search more Products?
                                                 </Link>
                                             </div>
                                         </div>
                                         <hr/>
                                         <p className='mt-3'>
-                                            Help other find their adventure by reviewing your loan.
+                                            Help other find their adventure by reviewing your product.
                                         </p>
                                         <Link className='btn btn-primary' to={`/checkout/${shelfCurrentLoan.book.id}`}>
                                             Leave a review
@@ -120,16 +151,17 @@ export const Loans = () => {
                                 </div>
                             </div>
                             <hr/>
-                            
+                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={false} returnBook={returnBook} 
+                                renewLoan={renewLoan}/>
                         </div>
                     ))}
                 </> :
                 <>
                     <h3 className='mt-3'>
-                        Currently no loans
+                        Currently no products
                     </h3>
                     <Link className='btn btn-primary' to={`search`}>
-                        Search for a new book
+                        Search for a new product
                     </Link>
                 </>
             }
@@ -139,7 +171,7 @@ export const Loans = () => {
             <div className='container d-lg-none mt-2'>
                 {shelfCurrentLoans.length > 0 ? 
                 <>
-                    <h5 className='mb-3'>Current Loans: </h5>
+                    <h5 className='mb-3'>Current Products: </h5>
 
                     {shelfCurrentLoans.map(shelfCurrentLoan => (
                         <div key={shelfCurrentLoan.book.id}>
@@ -154,7 +186,7 @@ export const Loans = () => {
                                 <div className='card d-flex mt-5 mb-3'>
                                     <div className='card-body container'>
                                         <div className='mt-3'>
-                                            <h4>Loan Options</h4>
+                                            <h4>Product Options </h4>
                                             {shelfCurrentLoan.daysLeft > 0 && 
                                                 <p className='text-secondary'>
                                                     Due in {shelfCurrentLoan.daysLeft} days.
@@ -174,16 +206,16 @@ export const Loans = () => {
                                                 <button className='list-group-item list-group-item-action' 
                                                     aria-current='true' data-bs-toggle='modal' 
                                                     data-bs-target={`#mobilemodal${shelfCurrentLoan.book.id}`}>
-                                                        Manage Loan
+                                                        Manage Product
                                                 </button>
                                                 <Link to={'search'} className='list-group-item list-group-item-action'>
-                                                    Search more books?
+                                                    Search more products?
                                                 </Link>
                                             </div>
                                         </div>
                                         <hr/>
                                         <p className='mt-3'>
-                                            Help other find their adventure by reviewing your loan.
+                                            Help other find their adventure by reviewing your product.
                                         </p>
                                         <Link className='btn btn-primary' to={`/checkout/${shelfCurrentLoan.book.id}`}>
                                             Leave a review
@@ -192,16 +224,17 @@ export const Loans = () => {
                                 </div>
                             
                             <hr/>
-                          
+                            <LoansModal shelfCurrentLoan={shelfCurrentLoan} mobile={true} returnBook={returnBook} 
+                                renewLoan={renewLoan}/>
                         </div>
                     ))}
                 </> :
                 <>
                     <h3 className='mt-3'>
-                        Currently no loans
+                        Currently no products
                     </h3>
                     <Link className='btn btn-primary' to={`search`}>
-                        Search for a new book
+                        Search for a new product
                     </Link>
                 </>
             }
