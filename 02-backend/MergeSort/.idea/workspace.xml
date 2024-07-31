@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2efe588f-3db6-4ec3-bd0a-7119583770c1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../spring-boot-library/src/main/java/com/universe/spring_boot_library/dao/HistoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../spring-boot-library/src/main/java/com/universe/spring_boot_library/dao/HistoryRepository.java" afterDir="false" />
-    </list>
+    <list default="true" id="2efe588f-3db6-4ec3-bd0a-7119583770c1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

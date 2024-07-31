@@ -151,6 +151,7 @@ public class BookService {
         SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Date d1 = sdFormat.parse(validateCheckout.getReturnDate());
+
         Date d2 = sdFormat.parse(LocalDate.now().toString());
 
         if (d1.compareTo(d2) > 0 || d1.compareTo(d2) == 0) {
